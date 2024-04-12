@@ -6,7 +6,7 @@ import { GlobalActions } from "@/lib/redux/actions/global.actions";
 function* getProducts(action: any) {
   try {
     // @ts-ignore
-    const response = yield HttpClient.get('/products');
+    const response = yield HttpClient.get('/products', { params: action.payload });
 
     yield put({
       type: GlobalActions.HIDE_LOADER,

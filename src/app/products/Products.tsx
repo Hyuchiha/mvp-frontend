@@ -13,6 +13,8 @@ import {
 import { useEffect } from "react";
 import { getProducts } from "@/lib/redux/actions/products.actions";
 import Loader from "@/components/Loader";
+import Pagination from "@/components/Pagination";
+import { useRouter } from "next/navigation";
 
 type Props = {
   page: number,
@@ -26,9 +28,27 @@ function Products({ page, limit }: Props) {
 
   const dispatch = useDispatch();
 
+  const router = useRouter();
+
   useEffect(() => {
     dispatch(getProducts(page, limit));
   }, [page, limit]);
+
+  const onBack = () => {
+    const { limit, prev } = pagination;
+
+    const params = new URLSearchParams({ page: prev ? prev : 1, limit }).toString();
+
+    router.push(`/products?${params}`);
+  }
+
+  const onNext = () => {
+    const { limit, next, totalPages } = pagination;
+
+    const params = new URLSearchParams({ page: next ? next : totalPages, limit }).toString();
+
+    router.push(`/products?${params}`);
+  }
 
   return (
     <>
@@ -40,6 +60,14 @@ function Products({ page, limit }: Props) {
           <span className="text-black text-sm font-semibold">Agregar producto</span>
         </Link>
       </Header>
+
+      <div className="flex flex-row justify-end">
+        <Pagination
+          pagination={pagination}
+          onBack={() => onBack()}
+          onNext={() => onNext()}
+        />
+      </div>
 
       <ProductsList products={products} />
 

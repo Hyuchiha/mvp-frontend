@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_PATH } from "@/constants/contants";
 
 const HttpClient = axios.create({
-  baseURL: 'http://localhost:3000/v1',
+  baseURL: API_PATH,
   headers: {
     'Content-Type': 'application/json'
   },
