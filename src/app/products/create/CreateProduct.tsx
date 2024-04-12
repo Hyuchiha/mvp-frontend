@@ -6,7 +6,7 @@ import { useState } from "react";
 import HttpClient from "@/lib/axios/httpClient";
 import Loader from "@/components/Loader";
 
-function createProduct() {
+function CreateProduct() {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -34,4 +34,4 @@ function createProduct() {
   );
 }
 
-export default createProduct;
+export default CreateProduct;
