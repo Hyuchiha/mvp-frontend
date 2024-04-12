@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import Toast from "@/components/Toast";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 
@@ -41,6 +42,8 @@ export default function RootLayout({
       <div className="flex h-[calc(100%_-_112px)]">
         {children}
       </div>
+
+      <Toast />
     </body>
     </html>
 );
