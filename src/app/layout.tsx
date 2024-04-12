@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Toast from "@/components/Toast";
+import { Providers } from "@/lib/providers";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 
@@ -16,12 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-    <head>
-      <title>ShopList</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"/>
-    </head>
-    <body className={`${montserrat.className} h-full bg-gray-100`}>
+    <Providers>
+      <html lang="en" className="h-full">
+      <head>
+        <title>ShopList</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"/>
+      </head>
+      <body className={`${montserrat.className} h-full bg-gray-100`}>
 
       <header className="text-white py-4 px-8 flex justify-between items-center">
         <nav className="flex flex-row items-center justify-between p-6 md:px-8 w-full">
@@ -43,8 +45,9 @@ export default function RootLayout({
         {children}
       </div>
 
-      <Toast />
-    </body>
-    </html>
-);
+      <Toast/>
+      </body>
+      </html>
+    </Providers>
+  );
 }
