@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Toast from "@/components/Toast";
 import { Providers } from "@/lib/providers";
+import GlobalLoader from "@/components/GlobalLoader";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 
@@ -28,7 +29,7 @@ export default function RootLayout({
       <header className="text-white py-4 px-8 flex justify-between items-center">
         <nav className="flex flex-row items-center justify-between p-6 md:px-8 w-full">
           <a href="/" className="-m-1.5 p-1.5">
-            <img src="vercel.svg" alt="logo" className="h-8 w-auto"/>
+            <img src="/vercel.svg" alt="logo" className="h-8 w-auto"/>
           </a>
 
           <div className="flex md:hidden">
@@ -46,6 +47,8 @@ export default function RootLayout({
       </div>
 
       <Toast/>
+
+      <GlobalLoader />
       </body>
       </html>
     </Providers>

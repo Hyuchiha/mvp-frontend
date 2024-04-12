@@ -1,11 +1,16 @@
 import HttpClient from "@/lib/axios/httpClient";
 import { all, put, takeLatest } from "@redux-saga/core/effects";
 import { ProductsTypes } from "@/lib/redux/actions/products.actions";
+import { GlobalActions } from "@/lib/redux/actions/global.actions";
 
 function* getProducts(action: any) {
   try {
     // @ts-ignore
     const response = yield HttpClient.get('/products');
+
+    yield put({
+      type: GlobalActions.HIDE_LOADER,
+    })
 
     yield put({
       type: ProductsTypes.GET_PRODUCTS_SUCCESS,

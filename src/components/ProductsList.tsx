@@ -9,7 +9,7 @@ type Props = {
 function ProductsList({ products }: Props) {
   return (
     <div className="flex flex-row flex-wrap justify-around gap-1 md:gap-6 lg:gap-8 mt-12">
-      { products?.map((product: any) => <SingleProduct product={product} />) }
+      { products?.map((product: any, index: number) => <SingleProduct key={index} product={product} />) }
     </div>
   );
 }
