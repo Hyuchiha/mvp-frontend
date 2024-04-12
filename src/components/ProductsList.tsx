@@ -12,7 +12,7 @@ function ProductsList({ products }: Props) {
   const renderProduct = (product: any) => {
 
     return (
-      <div className="relative flex flex-col overflow-hidden rounded-lg border shadow-md w-auto md:w-80 mb-6 hover:cursor-pointer">
+      <div key={product.objectId} className="relative flex flex-col overflow-hidden rounded-lg border shadow-md w-auto md:w-80 mb-6 hover:cursor-pointer">
         <div className="bg-gray-200 md:h-80 flex items-center justify-center p-8 hover:opacity-70">
           <img src='heart.png' alt="product" className="h-auto w-full" />
         </div>
