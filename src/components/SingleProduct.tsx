@@ -59,15 +59,21 @@ function SingleProduct({ product }: Props) {
           <span className="text-black font-semibold mt-4">${product.price}</span>
         </div>
 
-        <Link href={`/products/${product.objectId}/edit`}
+        <button onClick={(event) => {
+          event.stopPropagation();
+          router.push(`/products/${product.objectId}/edit`)
+        }}
               className="absolute top-2 right-2 rounded-full w-10 h-10 bg-white flex items-center justify-center hover:bg-black/10">
           <PencilIcon className="w-4 h-4 text-black"/>
-        </Link>
+        </button>
 
         <button
           type="button"
           className="absolute top-[calc(16px_+_40px)] right-2 rounded-full w-10 h-10 bg-white flex items-center justify-center hover:bg-black/10"
-          onClick={() => setShowConfirm(true) }
+          onClick={(event) => {
+            event.stopPropagation();
+            setShowConfirm(true);
+          } }
         >
           <TrashIcon className="w-4 h-4 text-black"/>
         </button>
