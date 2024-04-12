@@ -1,8 +1,9 @@
 "use client"
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { selectCategories } from "@/lib/redux/selectors/categories.selector";
 
 type Props = {
   initialValues?: any;
@@ -10,30 +11,9 @@ type Props = {
 }
 
 function FormProduct(props: Props) {
-  const [categories, setCategories] = useState([]);
+  const categories = useSelector(selectCategories);
 
   const router = useRouter();
-
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  const getCategories = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/v1/categories`);
-
-      if (!response.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
-      }
-
-
-      const fetchedCategories =  await response.json();
-      setCategories(fetchedCategories);
-    } catch (err) {
-      console.log("Error getting categories", err);
-    }
-  }
 
   const {
     initialValues = { name: '', description: '', price: 0, category: '' },

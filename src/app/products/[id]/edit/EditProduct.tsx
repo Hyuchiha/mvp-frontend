@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import FormProduct from "@/components/FormProduct";
 import { useEffect, useMemo, useState } from "react";
+import HttpClient from "@/lib/axios/httpClient";
+import Loader from "@/components/Loader";
 
 type Props = {
   prodId: string;
@@ -36,16 +38,8 @@ function UpdateProduct({ prodId }: Props) {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:3000/v1/products/${prodId}`);
-
-      if (!response.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
-      }
-
-
-      const fetchedProduct =  await response.json();
-      setProduct(fetchedProduct);
+      const response = await HttpClient.get(`/products/${prodId}`);
+      setProduct(response.data);
     } catch (err) {
       console.log("Error getting post", err);
     }
@@ -54,25 +48,24 @@ function UpdateProduct({ prodId }: Props) {
   }
 
   const onSubmit = async (newValues: any) => {
+    setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/v1/products/${prodId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newValues),
-      });
+      await HttpClient.put(`/products/${prodId}`, newValues);
 
       router.replace('/');
     } catch (err) {
       console.log("Error creating post", err);
     }
     console.log("Submit", newValues)
+
+    setLoading(false);
   }
 
   return (
     <div className="bg-white mt-6 p-8 rounded-lg border overflow-hidden shadow-md">
-      { !loading && product ? <FormProduct onSubmit={onSubmit} initialValues={initialData} /> : null }
+      { !loading || Object.keys(product)?.length > 0 ? <FormProduct onSubmit={onSubmit} initialValues={initialData} /> : null }
+
+      { loading && <Loader /> }
     </div>
   );
 }

@@ -2,30 +2,34 @@
 
 import FormProduct from "@/components/FormProduct";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import HttpClient from "@/lib/axios/httpClient";
+import Loader from "@/components/Loader";
 
 function createProduct() {
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const onSubmit = async (newValues: any) => {
+    setLoading(true);
+
     try {
-      const response = await fetch('http://localhost:3000/v1/products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newValues),
-      });
+      await HttpClient.post('/products', newValues);
 
       router.replace('/');
     } catch (err) {
       console.log("Error creating post", err);
     }
-    console.log("Submit", newValues)
+
+    setLoading(false);
   }
 
   return (
     <div className="bg-white mt-6 p-8 rounded-lg border overflow-hidden shadow-md">
       <FormProduct onSubmit={onSubmit}/>
+
+      { loading && <Loader /> }
     </div>
   );
 }
